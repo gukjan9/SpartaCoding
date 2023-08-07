@@ -6,7 +6,10 @@ headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/
 data = requests.get(URL, headers=headers)
 soup = BeautifulSoup(data.text, 'html.parser')
 
-title = soup.select_one('#mainContent > div > div.box_ranking > ol > li:nth-child(1) > div > div.thumb_cont > strong > a:nth-child(1)')
+lis = soup.select('#mainContent > div > div.box_ranking > ol > li')
 
-print(title.text)
-print(title['href'])
+for li in lis:
+    rank = li.select_one('.rank_num').text
+    title = li.select_one('.link_txt').text
+    rate = li.select_one('.txt_grade').text
+    print(rank, title, rate)
