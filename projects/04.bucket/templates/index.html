@@ -102,6 +102,7 @@
                     let bucket = a['bucket']
                     let temp_html = `<li>
                                         <h2>✅ ${bucket}</h2>
+                                        <button onclick="done_bucket()" type="button" class="btn btn-outline-primary">완료!</button>
                                     </li>`
                     $('#bucket-list').append(temp_html)                
 
@@ -116,6 +117,26 @@
         formData.append("bucket_give", bucket);
 
         fetch('/bucket', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
+            alert(data["msg"]);
+            window.location.reload();
+          });
+      }
+
+      function done_bucket() {
+        let num = $('#num').val()
+        let bucket = $('#bucket').val()
+        let done = $('#done').val()
+        console.log(bucket)
+        bucket = bucket + "완료!!"
+        done = 1
+        console.log(num, bucket, done)
+
+        let formData = new FormData();
+        formData.append("num_give", num);
+        formData.append("bucket_give", bucket);
+        formData.append("done_give", done);
+
+        fetch('/done', {method: "POST",body: formData,}).then((response) => response.json()).then((data) => {
             alert(data["msg"]);
             window.location.reload();
           });
@@ -141,6 +162,7 @@
     <div class="mybox" id="bucket-list">
       <li>
         <h2>✅ 호주에서 스카이다이빙 하기</h2>
+        <button onclick="done_bucket()" type="button" class="btn btn-outline-primary">완료!</button>
       </li>
     </div>
   </body>
